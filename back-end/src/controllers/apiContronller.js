@@ -89,8 +89,12 @@ exports.getVideo=(req,res,next)=>{
 exports.getSearch =(req,res,next)=>{
 const page=req.body.page? req.body.page:1
 const keySearch=req.body.keyword
+const mediaType=req.body.mediaType
+const language=req.body.language
+const year=req.body.year
+
 if(keySearch){
-    moviesList.getSearch(keySearch,page,(movie,total)=>{
+    moviesList.getSearch(keySearch,page,mediaType,language,year,(movie,total)=>{
         res.send({
             results: movie,
             page:page,
@@ -100,3 +104,10 @@ if(keySearch){
 }
 
 }
+
+
+
+exports.get404=(req,res,next)=>{
+    res.status(401).json({})
+}
+

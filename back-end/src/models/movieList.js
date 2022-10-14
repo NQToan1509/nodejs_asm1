@@ -2,10 +2,28 @@
  const path = require('path')
  const p = path.join(
 	path.dirname(process.mainModule.filename),
+	'src',
 	'data',
 	'movieList.json'
   );
- 
+  const p2 = path.join(
+	path.dirname(process.mainModule.filename),
+	'src',
+	'data',
+	'mediaTypeList.json'
+  );
+  const moviesType = {
+	all: function() {
+		return JSON.parse(fs.readFileSync(p2,
+			(err, fileContent) => {
+			if (err) {
+			  cb([]);
+			} else {
+			  cb(JSON.parse(fileContent));
+			}
+		  }));
+	},
+}
  const movies = {
 	all: function() {
 		return JSON.parse(fs.readFileSync(p,
@@ -17,6 +35,38 @@
 			}
 		  }));
 	},
+}
+
+
+const filterSearch=(movies, mediaType,language,year)=>{
+	let movie=movies
+	const  movieSearchMediaType=
+		mediaType
+		?moviesType.all().includes(mediaType.toLowerCase()) && mediaType.toLowerCase()== 'all'
+			? movie.filter((item)=>item.media_type===mediaType)
+			:movie
+		:movie
+
+	const movieSearchLanguage= 
+		language
+		?language.toLowerCase()=="en-us" || language.toLowerCase()=="jp"|| language.toLowerCase()==="kr"
+			? language.toLowerCase()=="en-us"
+				?movieSearchMediaType.filter((item)=>item.origin_country?item.origin_country[0].toLowerCase()==='us':false)
+				:movieSearchMediaType.filter((item)=>item.origin_country && item.origin_country.length>0 ?item.origin_country[0].toLowerCase()===language.toLowerCase():false)
+			:movieSearchMediaType
+		:movieSearchMediaType
+
+	const movieSearchYear= 
+		year
+			? movieSearchLanguage.filter((item)=>{
+				const d= new Date(item.first_air_date)
+				const yearItem= d.getFullYear()
+				return yearItem===parseInt(year)
+			})
+			: movieSearchLanguage
+
+return movieSearchYear
+
 }
 
 module.exports= {
@@ -50,7 +100,8 @@ module.exports= {
 					
 	},
 
-	getSearch:(keysearch,page,cb)=>{
+	getSearch:(keysearch,page, mediaType,language,year,cb)=>{
+		console.log('data')
 		const movieSearch= 
 			movies
 				.all()
@@ -61,8 +112,8 @@ module.exports= {
 					return item.overview.toLowerCase().search(keysearch.toLowerCase())>0
 					}
 				} )
-				
-		const movie= movieSearch.slice((page-1)*20,(page-1)*20+20)
-		cb(movie,Math.floor(movieSearch.length/20))
+		const moviefilters=filterSearch(movieSearch,mediaType,language,year)
+		const movie= moviefilters.length>20? moviefilters.slice((page-1)*20,(page-1)*20+20):moviefilters
+		cb(movie,Math.floor(moviefilters.length/20))
 			}			
 	}

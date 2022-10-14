@@ -2,6 +2,7 @@ var fs =require('fs')
 const path = require('path')
 const p = path.join(
    path.dirname(process.mainModule.filename),
+   'src',
    'data',
    'userToken.json'
  );
