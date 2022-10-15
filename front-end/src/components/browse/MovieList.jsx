@@ -7,15 +7,22 @@ import './MovieList.css';
 const base_url = 'https://image.tmdb.org/t/p/original';
 const movies_limit = 10;
 
+const fetchdata=async ()=>{
+	console.log('data')
+	const data= await fetch('http://localhost:4000/api/movies/trending?Token=8qlOkxz4wq').then((res)=>res.json()).then((data)=>{console.log(data,'2');return data})
+  }
+fetchdata()
+
 function MovieList({ title, fetchUrl, isLargeRow }) {
 	console.log(isLargeRow,title)
 	const [movies, setMovies] = useState([]);
 	const [trailerUrl, setTrailerUrl] = useState('');
 	const [selectedMovie, setSelectedMovie] = useState(null);
-
+	console.log(movies,'15')
 	useEffect(() => {
 		async function fetchData() {
 			const request = await axios.get(fetchUrl);
+			console.log(request.data.results,'data')
 			setMovies(request.data.results);
 			return request;
 		}

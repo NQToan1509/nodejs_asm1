@@ -39,22 +39,25 @@
 
 
 const filterSearch=(movies, mediaType,language,year)=>{
+	console.log(mediaType)
 	let movie=movies
-	const  movieSearchMediaType=
+	const movieSearchMediaType=
 		mediaType
-		?moviesType.all().includes(mediaType.toLowerCase()) && mediaType.toLowerCase()== 'all'
-			? movie.filter((item)=>item.media_type===mediaType)
+			?moviesType.all().includes(mediaType.toLowerCase()) 
+				? mediaType.toLowerCase()== 'all'
+					?movie
+					:movie.filter((item)=> item.media_type===mediaType.toLowerCase())
+				:movie
 			:movie
-		:movie
 
 	const movieSearchLanguage= 
 		language
-		?language.toLowerCase()=="en-us" || language.toLowerCase()=="jp"|| language.toLowerCase()==="kr"
-			? language.toLowerCase()=="en-us"
-				?movieSearchMediaType.filter((item)=>item.origin_country?item.origin_country[0].toLowerCase()==='us':false)
-				:movieSearchMediaType.filter((item)=>item.origin_country && item.origin_country.length>0 ?item.origin_country[0].toLowerCase()===language.toLowerCase():false)
+			?language.toLowerCase()=="en-us" || language.toLowerCase()=="jp"|| language.toLowerCase()==="kr"
+				? language.toLowerCase()=="en-us"
+					?movieSearchMediaType.filter((item)=>item.origin_country  && item.origin_country.length>0?item.origin_country[0].toLowerCase()==='us':false)
+					:movieSearchMediaType.filter((item)=>item.origin_country && item.origin_country.length>0 ?item.origin_country[0].toLowerCase()===language.toLowerCase():false)
+				:movieSearchMediaType
 			:movieSearchMediaType
-		:movieSearchMediaType
 
 	const movieSearchYear= 
 		year
@@ -65,7 +68,7 @@ const filterSearch=(movies, mediaType,language,year)=>{
 			})
 			: movieSearchLanguage
 
-return movieSearchYear
+	return movieSearchYear
 
 }
 
@@ -108,12 +111,12 @@ module.exports= {
 				.filter((item)=>{ 
 					if(item.title){
 						return item.overview.toLowerCase().search(keysearch.toLowerCase())>0 || item.overview.toLowerCase().search(keysearch.toLowerCase())>0
-					}else if(item.overview ){
-					return item.overview.toLowerCase().search(keysearch.toLowerCase())>0
+					}else if(item.overview){
+						return item.overview.toLowerCase().search(keysearch.toLowerCase())>0
 					}
-				} )
+				})
 		const moviefilters=filterSearch(movieSearch,mediaType,language,year)
 		const movie= moviefilters.length>20? moviefilters.slice((page-1)*20,(page-1)*20+20):moviefilters
 		cb(movie,Math.floor(moviefilters.length/20))
-			}			
-	}
+	}			
+}

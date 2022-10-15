@@ -6,13 +6,9 @@ const authMiddleware= require('../auth/authMiddleware')
 
 const router=express.Router()
 
-router.get('/api/movies/trending/',apiContronller.getTrending)
+router.get('/api/movies/trending',authMiddleware.tokenAuth,apiContronller.getTrendingPage)
 
-router.get('/api/movies/trending/:page',authMiddleware.tokenAuth,apiContronller.getTrendingPage)
-
-router.get('/api/movies/top-rate',apiContronller.getTopRate)
-
-router.get('/api/movies/top-rate/:page',authMiddleware.tokenAuth,apiContronller.getTopRatePage)
+router.get('/api/movies/top-rate',authMiddleware.tokenAuth,apiContronller.getTopRatePage)
 
 router.get('/api/movies/discover',authMiddleware.tokenAuth,apiContronller.getDiscover)
 
