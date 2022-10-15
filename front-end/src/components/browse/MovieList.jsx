@@ -7,18 +7,14 @@ import './MovieList.css';
 const base_url = 'https://image.tmdb.org/t/p/original';
 const movies_limit = 10;
 
-const fetchdata=async ()=>{
-	console.log('data')
-	const data= await fetch('http://localhost:4000/api/movies/trending?Token=8qlOkxz4wq').then((res)=>res.json()).then((data)=>{console.log(data,'2');return data})
-  }
-fetchdata()
 
-function MovieList({ title, fetchUrl, isLargeRow }) {
+function MovieList({ title, fetchUrl, isLargeRow,fetchVideo }) {
 	console.log(isLargeRow,title)
 	const [movies, setMovies] = useState([]);
 	const [trailerUrl, setTrailerUrl] = useState('');
 	const [selectedMovie, setSelectedMovie] = useState(null);
 	console.log(movies,'15')
+	console.log(trailerUrl,'14')
 	useEffect(() => {
 		async function fetchData() {
 			const request = await axios.get(fetchUrl);
@@ -35,12 +31,15 @@ function MovieList({ title, fetchUrl, isLargeRow }) {
 			setTrailerUrl('');
 		} else {
 			setSelectedMovie(movie);
-			movieTrailer(movie?.title || '')
-			.then((url) => {
-				const urlParams = new URLSearchParams(new URL(url).search);
-				setTrailerUrl(urlParams.get('v'));
-			})
-			.catch((error) => console.log(error));
+			console.log(movie.id)
+			async function fetchData() {
+				const request = await axios.post(fetchVideo(movie.id));
+				console.log(request.data,'data')
+				setTrailerUrl(request.data[0].key);
+				return request;
+			}
+			fetchData()
+
 		}
 	};
 

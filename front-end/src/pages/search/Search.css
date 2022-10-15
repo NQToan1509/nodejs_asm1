@@ -636,6 +636,10 @@ legend {
 	width: calc((100% - 40px) / 3);
 }
 
+.s009 form .inner-form .advance-search .input-field select{
+	width: 20%;
+	height: 40px;
+}
 .s009 form .inner-form .advance-search .input-select {
 	height: 40px;
 }

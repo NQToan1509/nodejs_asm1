@@ -23,7 +23,7 @@
 module.exports= {
 getDiscoverName:(genreId)=>{
 	const MoviesId=typeMoviesId.all().filter((item)=>{return item.id==genreId})
-	console.log(MoviesId)
+	// console.log(MoviesId)
 	return MoviesId[0].name
 }
 

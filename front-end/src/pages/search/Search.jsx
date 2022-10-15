@@ -5,16 +5,28 @@ import SearchResult from '../../components/search/SearchResult';
 import './Search.css';
 
 const Search = () => {
-	const [query, setQuery] = useState('');
+	const [query, setQuery] = useState({
+		keyword:'',
+		page:1,
+		language:'',
+		mediaType:'all'
+	});
 	const [searchInput, setSearchInput] = useState('');
 
+	console.log(searchInput)
+	
+
+
 	const handleSearch = () => {
-		setQuery(searchInput);
+		setQuery({...query,keyword:searchInput});
+		
+
 	}
 
 	const resetSearch = () => {
-		setQuery('');
-		setSearchInput('');
+		const form=document.getElementsByTagName('form')
+		form[0].reset()
+		setSearchInput('')
 	}
 
 	return (
@@ -31,6 +43,30 @@ const Search = () => {
 									onChange={(e) => setSearchInput(e.target.value)}
 									value={searchInput}
 								/>
+								<div className='row'>
+								<label>Media Type: </label>
+								<select 
+									type='select'
+									onChange={(e) => setQuery({...query,mediaType:e.target.value})}
+									value={query.mediaType}
+								> 
+								 <option value="all">ALL</option>
+								 <option value="tv">TV</option>
+								 <option value="person">PERSON</option>
+								 <option value="movie">MOVIE</option>
+								 </select>
+								 <label>Langage: </label>
+								 <select 
+									type='select'
+									onChange={(e) => setQuery({...query,language:e.target.value})}
+									value={query.language}
+								> 
+								 <option value=""></option>
+								 <option value="en-us">EN_US</option>
+								 <option value="jp">JP</option>
+								 <option value="kr">KR</option>
+								 </select>
+								 </div>
 								<div className='icon-wrap'>
 									<svg
 										className='svg-inline--fa fa-search fa-w-16'

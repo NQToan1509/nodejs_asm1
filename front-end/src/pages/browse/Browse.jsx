@@ -13,13 +13,13 @@ function Browse() {
 			<Nav />
 			<Banner />
 			{/* <MovieList title="" isLargeRow fetchUrl={requests.fetchNetflixOriginals} /> */}
-			<MovieList title="" isLargeRow fetchUrl={requests.fetchTrending} />
-			<MovieList title="Xếp hạng cao" fetchUrl={requests.fetchTopRated} />
-			<MovieList title="Hành động" fetchUrl={requests.fetchActionMovies} />
-			<MovieList title="Hài" fetchUrl={requests.fetchComedyMovies} />
-			<MovieList title="Kinh dị" fetchUrl={requests.fetchHorrorMovies} />
-			<MovieList title="Lãng mạn" fetchUrl={requests.fetchRomanceMovies} />
-			<MovieList title="Tài liệu" fetchUrl={requests.fetchDocumentaries} />
+			<MovieList title="" isLargeRow fetchUrl={requests.fetchTrending} fetchVideo={requests.fetchDetailMovie}/>
+			<MovieList title="Xếp hạng cao" fetchUrl={requests.fetchTopRated} fetchVideo={requests.fetchDetailMovie}/>
+			<MovieList title="Hành động" fetchUrl={requests.fetchActionMovies} fetchVideo={requests.fetchDetailMovie}/>
+			<MovieList title="Hài" fetchUrl={requests.fetchComedyMovies} fetchVideo={requests.fetchDetailMovie}/>
+			<MovieList title="Kinh dị" fetchUrl={requests.fetchHorrorMovies} fetchVideo={requests.fetchDetailMovie}/>
+			<MovieList title="Lãng mạn" fetchUrl={requests.fetchRomanceMovies} fetchVideo={requests.fetchDetailMovie}/>
+			<MovieList title="Tài liệu" fetchUrl={requests.fetchDocumentaries} fetchVideo={requests.fetchDetailMovie}/>
 		</div>
 	);
 }

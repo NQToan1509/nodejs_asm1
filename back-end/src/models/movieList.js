@@ -39,7 +39,7 @@
 
 
 const filterSearch=(movies, mediaType,language,year)=>{
-	console.log(mediaType)
+	// console.log(mediaType)
 	let movie=movies
 	const movieSearchMediaType=
 		mediaType
@@ -104,7 +104,7 @@ module.exports= {
 	},
 
 	getSearch:(keysearch,page, mediaType,language,year,cb)=>{
-		console.log('data')
+		// console.log('data')
 		const movieSearch= 
 			movies
 				.all()

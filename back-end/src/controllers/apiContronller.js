@@ -31,11 +31,10 @@ exports.getTopRatePage=(req,res,next)=>{
 exports.getDiscover=(req,res,next)=>{
     const page=req.query.page
     const genreId=req.query.genreId
-    console.log(page, genreId)
+   
     if(!genreId){  res.status(400).json({code:400,message:"Not found gerne parram"})}
     else{
         moviesList.getDiscover(page,parseInt(genreId),(movie,total,err)=>{
-            console.log(movie,err)
             if(!err){
                 res.json({
                     results: movie,
@@ -54,8 +53,8 @@ exports.getDiscover=(req,res,next)=>{
 
 
 exports.getVideo=(req,res,next)=>{
-    const id=req.body.film_Id
-    console.log(id)
+    const id=req.query.film_Id
+    console.log(id,'id')
     if(id){
     videoMovie.getVideoId(id,(videoMovie)=>{
         if(videoMovie.length>0){

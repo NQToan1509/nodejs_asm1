@@ -53,7 +53,6 @@ module.exports={
 					cb([movieTeaser[0]])
 				
 			}else{
-				console.log(movieTraler2)
 				cb([movieTraler2[0]])
 			}
 		}else{
